@@ -5,3 +5,6 @@ first_card = gets.chomp.to_i
 
 puts "Please enter your second card: "
 second_card = gets.chomp.to_i
+
+puts "Please enter dealers card: "
+dealer_card = gets.chomp.to_i
