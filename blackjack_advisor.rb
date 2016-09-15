@@ -1,3 +1,7 @@
+K || Q || J = 10
+A = 1 || 11
+
+
 puts "Greetings! I am willing to help you optimize your gameplay in Blackjack, but I am going to need some input from you first!"
 
 puts "Please enter your first card: "
