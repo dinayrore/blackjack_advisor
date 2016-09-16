@@ -1,5 +1,11 @@
 # method sums
 # method for comparing
+public
+def between?(min, max)
+  return true
+end
+
+
 def is_numeric?
   is_float? || is_integer?
   return true
@@ -16,6 +22,13 @@ def compare_values_hard_hand(player, dealer)
        ((player.first + player.last) == 12) && (dealer.between?(7, 11)) ||
        ((player.first + player.last).between?(13, 16)) && (dealer.between?(7, 11))
       puts "You Better Hit!"
+    elsif ((player.first + player.last) == 8) && (dealer.between?(5, 6)) ||
+          ((player.first + player.last) == 9) && (dealer.between?(2, 6)) ||
+          ((player.first + player.last) == 10) && (dealer.between?(2, 9)) ||
+          ((player.first + player.last) == 11) && (dealer.between?(2, 11))
+      puts "Double or Hit!"
+    else
+      puts "Stand"
     end
   end
 end
@@ -33,32 +46,32 @@ if player_first_card == "A"
 elsif other_card_values.include?(player_first_card)
   player_first_card = player_first_card.to_i
 else
-  puts "Please enter a valid value moron. Try again later."
-  break
+  puts "Please enter a valid value. Try again later."
+  exit
 end
 
 puts "Please enter your second card: "
-player_second_card = gets.chomp.to_i
+player_second_card = gets.chomp
 if player_second_card == "A"
   player_second_card = 11
 elsif other_card_values.include?(player_second_card)
   player_second_card = player_second_card.to_i
 else
-  puts "Please enter a valid value moron. Try again later."
-  break
+  puts "Please enter a valid value. Try again later."
+  exit
 end
 
 blackjack_hash["player_cards"] = [player_first_card, player_second_card]
 
 puts "Please enter dealers card: "
-dealers_card = gets.chomp.to_i
+dealers_card = gets.chomp
 if dealers_card == "A"
   dealers_card = 11
 elsif other_card_values.include?(dealers_card)
   dealers_card = dealers_card.to_i
 else
-  puts "Please enter a valid value moron. Try again later."
-  break
+  puts "Please enter a valid value. Try again later."
+  exit
 end
 
 blackjack_hash["dealers_card"] = dealers_card
