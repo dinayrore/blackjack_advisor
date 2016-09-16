@@ -1,19 +1,36 @@
 # method sums
 # method for comparing
+require 'pry'
 public
 def between?(min, max)
   return true
 end
 
+def include?(value)
+  return true
+end
 
 def is_numeric?
   is_float? || is_integer?
   return true
 end
 
-def compare_values_hard_hand(player, dealer)
+def compare_values_hard_hand(player, dealer) # something buggy here... says to hit when should say stand cannot figure out why...
   if player.first != 11 && player.last != 11 #you have a hard hand
-    if ((player.first + player.last).between?(5, 7)) && (dealer.between?(2, 11)) ||
+    if ((player.first + player.last).between?(5, 11)) && (dealer.between?(2, 11)) ||
+       ((player.first + player.last).include?(12)) && (dealer.between?(2, 3)) ||
+       ((player.first + player.last).include?(12)) && (dealer.between?(7, 11)) ||
+       ((player.first + player.last).between?(13, 16)) && (dealer.between?(7, 11))
+      puts "You Better Hit!"
+    else
+      puts "Stand"
+    end
+  end
+end
+
+def compare_values_soft_hand(player, dealer)
+  if player.first == 11 || player.last == 11 #you have a soft hand
+    if ((player.first + player.last).between?(13, 16)) && (dealer.between?(2, 3)) ||
        ((player.first + player.last) == 8) && (dealer.between?(2, 4)) ||
        ((player.first + player.last) == 8) && (dealer.between?(7, 11)) ||
        ((player.first + player.last) == 9) && (dealer.between?(7, 11)) ||
@@ -22,22 +39,16 @@ def compare_values_hard_hand(player, dealer)
        ((player.first + player.last) == 12) && (dealer.between?(7, 11)) ||
        ((player.first + player.last).between?(13, 16)) && (dealer.between?(7, 11))
       puts "You Better Hit!"
-    elsif ((player.first + player.last) == 8) && (dealer.between?(5, 6)) ||
-          ((player.first + player.last) == 9) && (dealer.between?(2, 6)) ||
-          ((player.first + player.last) == 10) && (dealer.between?(2, 9)) ||
-          ((player.first + player.last) == 11) && (dealer.between?(2, 11))
-      puts "Double or Hit!"
     else
       puts "Stand"
     end
   end
 end
-
 blackjack_hash = {}
 other_card_values = [*"2".."10"]
 
 puts "Greetings! I can help you optimize your gameplay in Blackjack. But I am going to need some input from you first."
-puts "Please use the number value 10 for King, Queen, or Jack card faces, and the letter A for Ace."
+puts "Please use the number value 10 for King, Queen, or Jack face cards, and the letter A for Ace."
 
 puts "Please enter your first card: "
 player_first_card = gets.chomp
@@ -63,7 +74,7 @@ end
 
 blackjack_hash["player_cards"] = [player_first_card, player_second_card]
 
-puts "Please enter dealers card: "
+puts "Please enter dealer's card: "
 dealers_card = gets.chomp
 if dealers_card == "A"
   dealers_card = 11
@@ -77,3 +88,5 @@ end
 blackjack_hash["dealers_card"] = dealers_card
 
 compare_values_hard_hand(blackjack_hash["player_cards"], blackjack_hash["dealer_card"])
+compare_values_soft_hand(blackjack_hash["player_cards"], blackjack_hash["dealer_card"])
+#compare_values_pairs(blackjack_hash["player_cards"], blackjack_hash["dealer_card"])
