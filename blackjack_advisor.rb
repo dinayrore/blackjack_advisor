@@ -17,6 +17,7 @@ end
 
 def compare_values_hard_hand(player, dealer) # something buggy here... says to hit when should say stand cannot figure out why...
   if player.first != 11 && player.last != 11 #you have a hard hand
+    puts "Tough luck there bro. You're playing the hard hand..."
     if ((player.first + player.last).between?(5, 11)) && (dealer.between?(2, 11)) ||
        ((player.first + player.last).include?(12)) && (dealer.between?(2, 3)) ||
        ((player.first + player.last).include?(12)) && (dealer.between?(7, 11)) ||
@@ -30,22 +31,32 @@ end
 
 def compare_values_soft_hand(player, dealer)
   if player.first == 11 || player.last == 11 #you have a soft hand
-    if ((player.first + player.last).between?(13, 16)) && (dealer.between?(2, 3)) ||
-       ((player.first + player.last) == 8) && (dealer.between?(2, 4)) ||
-       ((player.first + player.last) == 8) && (dealer.between?(7, 11)) ||
-       ((player.first + player.last) == 9) && (dealer.between?(7, 11)) ||
-       ((player.first + player.last) == 10) && (dealer.between?(10, 11)) ||
-       ((player.first + player.last) == 12) && (dealer.between?(2, 3)) ||
-       ((player.first + player.last) == 12) && (dealer.between?(7, 11)) ||
-       ((player.first + player.last).between?(13, 16)) && (dealer.between?(7, 11))
+    puts "Alright, I can work with this. You're playing a soft hand..."
+    if ((player.first + player.last).between?(13, 17)) && (dealer.between?(2, 11)) ||
+       ((player.first + player.last).include?(18)) && (dealer.between?(9, 10))
       puts "You Better Hit!"
     else
       puts "Stand"
     end
   end
 end
+
+def compare_values_pairs(player, dealer)
+  if player.first == player.last #you have a set of pairs
+    puts "So you're playing with pairs, huh..."
+    if ((player.first + player.last).between?(13, 17)) && (dealer.between?(2, 11)) ||
+       ((player.first + player.last).include?(18)) && (dealer.between?(9, 10))
+      puts "You Better Hit!"
+    elsif
+      puts "Stand"
+    else
+      puts "You should probably split that..."
+    end
+  end
+end
+
 blackjack_hash = {}
-other_card_values = [*"2".."10"]
+other_card_values = [*"2".."11"]
 
 puts "Greetings! I can help you optimize your gameplay in Blackjack. But I am going to need some input from you first."
 puts "Please use the number value 10 for King, Queen, or Jack face cards, and the letter A for Ace."
@@ -89,4 +100,4 @@ blackjack_hash["dealers_card"] = dealers_card
 
 compare_values_hard_hand(blackjack_hash["player_cards"], blackjack_hash["dealer_card"])
 compare_values_soft_hand(blackjack_hash["player_cards"], blackjack_hash["dealer_card"])
-#compare_values_pairs(blackjack_hash["player_cards"], blackjack_hash["dealer_card"])
+compare_values_pairs(blackjack_hash["player_cards"], blackjack_hash["dealer_card"])
