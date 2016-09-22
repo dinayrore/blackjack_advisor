@@ -1,109 +1,83 @@
-public
+require 'pry'
 
-def between?(min, max)
-  return true
+# require_relative 'Cards.rb'
+
+def obtain_player_first_card
+  puts 'Please use the number 10 for face cards, and the letter \'A\' for Aces.'
+  print 'Please enter your first card: '
+  first_card = gets.chomp.upcase
+  check_first_card_value(first_card)
 end
 
-def include?(value)
-  return true
-end
-
-def is_numeric?
-  is_float? || is_integer?
-  return true
-end
-
-def compare_values_hard_hand(player, dealer)
-  if player.first != 11 && player.last != 11 && player.first != player.last
-    puts "Tough luck there bro. You're playing a hard hand..."
-    if ((player.first + player.last).between?(5, 11)) && (dealer.between?(2, 11)) ||
-       ((player.first + player.last).include?(12)) && (dealer.between?(2, 3)) ||
-       ((player.first + player.last).between?(12, 16)) && (dealer.between?(7, 11))
-      puts "You Better Hit!"
-    else
-      puts "Stand"
-    end
+def check_first_card_value(first_card)
+  card_values = [*'2'..'10', 'A']
+  if first_card == 'A'
+    first_card = '11'
+    puts "Your first card is a/an #{first_card}"
+    obtain_player_second_card(first_card)
+  elsif card_values.include?(first_card)
+    obtain_player_second_card(first_card)
+    puts "Your first card is a/an #{first_card}"
+  else
+    puts 'Invalid input. Try again'
+    obtain_player_first_card
   end
 end
 
-def compare_values_soft_hand(player, dealer)
-  if (player.first == 11 && player.first != player.last) || (player.last == 11 && player.first != player.last) #you have a soft hand
-    puts "Alright, I can work with this. You're playing a soft hand..."
-    if ((player.first + player.last).between?(13, 17)) && (dealer.between?(2, 11)) ||
-       ((player.first + player.last).include?(18)) && (dealer.between?(9, 10))
-      puts "You Better Hit!"
-    else
-      puts "Stand"
-    end
+def obtain_player_second_card(first_card)
+  puts 'Please use the number 10 for face cards, and the letter \'A\' for Aces.'
+  print 'Please enter your second card: '
+  second_card = gets.chomp.upcase
+  check_second_card_value(second_card, first_card)
+end
+
+def check_second_card_value(second_card, first_card)
+  card_values = [*'2'..'10', 'A']
+  if second_card == 'A'
+    second_card = '11'
+    puts "Your first card is a/an #{second_card}"
+    sum_of_player_cards(first_card, second_card)
+  elsif card_values.include?(second_card)
+    puts "Your first card is a/an #{second_card}"
+    sum_of_player_cards(first_card, second_card)
+  else
+    puts 'Invalid input. Try again'
+    obtain_player_second_card
   end
 end
 
-def compare_values_pairs(player, dealer)
-  if player.first == player.last
-    puts "So you're playing with pairs, huh..."
-    if (player.include?(2)) && (dealer.between?(8, 11)) ||
-       (player.include?(3)) && (dealer.between?(9, 11)) ||
-       (player.include?(4)) && (dealer.between?(2, 3)) ||
-       (player.include?(4)) && (dealer.between?(7, 11)) ||
-       (player.include?(5)) && (dealer.between?(2, 11)) ||
-       (player.include?(6)) && (dealer.between?(8, 11)) ||
-       (player.include?(7)) && (dealer.include?(9)) ||
-       (player.include?(7)) && (dealer.include?(11))
-      puts "You Better Hit!"
-    elsif (player.include?(7)) && (dealer.include?(10)) ||
-      (player.include?(9)) && (dealer.include?(7)) ||
-      (player.include?(9)) && (dealer.between?(10, 11)) ||
-      (player.include?(10)) && (dealer.between?(2, 11))
-      puts "Stand"
-    else
-      puts "You should probably split that..."
-    end
-  end
+def sum_of_player_cards(first_card, second_card)
+  card_sum = first_card + second_card
+  obtain_dealer_card
 end
 
-blackjack_hash = {}
-other_card_values = [*"2".."11"]
-
-puts "Greetings! I can help you optimize your gameplay in Blackjack. But I am going to need some input from you first."
-puts "Please use the number value 10 for King, Queen, or Jack face cards, and the letter A for Ace. Any other value is invalid and will end the program."
-
-puts "Please enter your first card: "
-player_first_card = gets.chomp
-if player_first_card == "A"
-  player_first_card = 11
-elsif other_card_values.include?(player_first_card)
-  player_first_card = player_first_card.to_i
-else
-  puts "Please enter a valid value. Try again later."
-  exit
+def obtain_dealer_card(card_sum)
+  puts 'Please use the number 10 for face cards, and the letter \'A\' for Aces.'
+  print 'Please enter the dealer card: '
 end
 
-puts "Please enter your second card: "
-player_second_card = gets.chomp
-if player_second_card == "A"
-  player_second_card = 11
-elsif other_card_values.include?(player_second_card)
-  player_second_card = player_second_card.to_i
-else
-  puts "Please enter a valid value. Try again later."
-  exit
+def open_deck
+  # How many decks are you playing with?
 end
 
-blackjack_hash["player_cards"] = [player_first_card, player_second_card]
-
-puts "Please enter dealer's card: "
-dealers_card = gets.chomp
-if dealers_card == "A"
-  dealers_card = 11
-elsif other_card_values.include?(dealers_card)
-  dealers_card = dealers_card.to_i
-else
-  puts "Please enter a valid value. Try again later."
-  exit
+def compare_player_cards
+  # hard hand has_key?(card_sum).has_value?(dealer)
+  # soft hand
+  # pairs
 end
 
-blackjack_hash["dealers_card"] = dealers_card
+def main
+  puts 'Welcome to Blackjack Advisor!'
+  obtain_player_first_card
 
-compare_values_pairs(blackjack_hash["player_cards"], blackjack_hash["dealers_card"])
-compare_values_hard_hand(blackjack_hash["player_cards"], blackjack_hash["dealers_card"])
-compare_values_soft_hand(blackjack_hash["player_cards"], blackjack_hash["dealers_card"])
+end
+
+main if __FILE__ == $PROGRAM_NAME
+
+
+# I created classes for each scenerio 1 deck, 2 deck, and 4 or more decks...
+# once the user inputs number of decks I need to open those deck classes and get more user input
+
+
+# print 'How many decks are we playing with? Choose \'1\', \'2\', or \'4\': '
+# gets.chomp.to_i
