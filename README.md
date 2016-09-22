@@ -1,6 +1,6 @@
 # Blackjack Advisor
 
-The program entitled blackjack_advisor.rb is a basic program intended to help users optimize their profits during a game of Blackjack.  The program asks for the user to input data for both player cards and the dealer's card using number values for numbered cards, the number '10' for face cards and the letter 'A' for Ace cards.  The program will automatically advise the user to hit, stand, or split based on the players hand (hard, soft, or set of pairs).
+The program entitled blackjack_advisor.rb is a program intended to help users optimize their profits during a game of Blackjack.  The program asks for the user to input data for both player cards and the dealer's card using number values for numbered cards, the number '10' for face cards, and the letter 'A' for Ace cards.  The program will automatically advise the user to hit, stand, or split based on the players hand (hard, soft, or set of pairs).
 
 ## Getting Started
 
@@ -49,3 +49,5 @@ Please complete the following procedure to run the program on a live system:
 ## Acknowledgments
 
 * The Iron Yard - Durham
+* Alyssa Pratt
+* Bryce Darling
