@@ -1,62 +1,56 @@
 require 'pry'
 
-# require_relative 'Cards.rb'
-
-def obtain_player_first_card
+def obtain_player_cards(*_)
   puts 'Please use the number 10 for face cards, and the letter \'A\' for Aces.'
-  print 'Please enter your first card: '
-  first_card = gets.chomp.upcase
-  check_first_card_value(first_card)
+  print "Please enter your #{@number} card: "
+  @player_card = gets.chomp.upcase
+  check_card_value(@player_card)
 end
 
-def check_first_card_value(first_card)
-  card_values = [*'2'..'10', 'A']
-  if first_card == 'A'
-    first_card = '11'
-    puts "Your first card is a/an #{first_card}"
-    obtain_player_second_card(first_card)
-  elsif card_values.include?(first_card)
-    obtain_player_second_card(first_card)
-    puts "Your first card is a/an #{first_card}"
+def check_card_value(*_)
+  card_values = [*'2'..'10']
+  if @player_card == 'A'
+    @player_card = '11'
+    puts "Your #{@number} card has a value of #{@player_card}." "\n "
+  elsif card_values.include?(@player_card)
+    puts "Your #{@number} card has a value of #{@player_card}." "\n "
   else
-    puts 'Invalid input. Try again'
-    obtain_player_first_card
+    puts 'Invalid input. Try again.'
+    obtain_player_cards
   end
 end
 
-def obtain_player_second_card(first_card)
-  puts 'Please use the number 10 for face cards, and the letter \'A\' for Aces.'
-  print 'Please enter your second card: '
-  second_card = gets.chomp.upcase
-  check_second_card_value(second_card, first_card)
+def obtain_dealer_card
+  puts 'Remember to use \'10\' for face cards, and \'A\' for Aces.'
+  print 'Please enter the dealer card: '
+  dealer_card = gets.chomp.upcase
+  check_dealer_card_value(dealer_card)
 end
 
-def check_second_card_value(second_card, first_card)
-  card_values = [*'2'..'10', 'A']
-  if second_card == 'A'
-    second_card = '11'
-    puts "Your first card is a/an #{second_card}"
-    sum_of_player_cards(first_card, second_card)
-  elsif card_values.include?(second_card)
-    puts "Your first card is a/an #{second_card}"
-    sum_of_player_cards(first_card, second_card)
+def check_dealer_card_value(dealer_card)
+  card_values = [*'2'..'10']
+  if dealer_card == 'A'
+    dealer_card = '11'
+    puts "The dealer card has a value of #{dealer_card}." "\n "
+  elsif card_values.include?(dealer_card)
+    puts "The dealer card has a value of #{dealer_card}." "\n "
   else
-    puts 'Invalid input. Try again'
-    obtain_player_second_card
+    puts 'Invalid input. Try again.'
+    obtain_dealer_card
   end
+  dealer_card
 end
 
 def sum_of_player_cards(first_card, second_card)
-  card_sum = first_card + second_card
+  card_sum.to_s = first_card.to_i + second_card.to_i
   obtain_dealer_card
 end
 
-def obtain_dealer_card(card_sum)
-  puts 'Please use the number 10 for face cards, and the letter \'A\' for Aces.'
-  print 'Please enter the dealer card: '
-end
-
 def open_deck
+  puts 'So, how many decks are you playing with?'
+  print "Please enter either \'1\', \'2\', or \'4\': "
+  deck_number = gets.chomp.to_i
+  
   # How many decks are you playing with?
 end
 
@@ -67,17 +61,21 @@ def compare_player_cards
 end
 
 def main
-  puts 'Welcome to Blackjack Advisor!'
-  obtain_player_first_card
-
+  player_cards = []
+  puts 'Welcome to Blackjack Advisor!' "\n "
+  @number = 'first'
+  obtain_player_cards
+  player_cards << @player_card
+  @number = 'second'
+  obtain_player_cards
+  player_cards << @player_card
+  obtain_dealer_card
+  open_deck
 end
 
 main if __FILE__ == $PROGRAM_NAME
 
-
 # I created classes for each scenerio 1 deck, 2 deck, and 4 or more decks...
 # once the user inputs number of decks I need to open those deck classes and get more user input
-
-
 # print 'How many decks are we playing with? Choose \'1\', \'2\', or \'4\': '
 # gets.chomp.to_i
