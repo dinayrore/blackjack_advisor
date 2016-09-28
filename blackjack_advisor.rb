@@ -194,10 +194,10 @@ end
 
 def hard_hand_one_deck(sum, dealer_card)
   play = OneDeck.new
-  play.hard_hand_one.each do |player_key, value|
-    if player_key.include?(sum)
+  play.hard_hand.each do |player_key, value|
+    if player_key.include?(sum.to_s)
       value.each do |dealer_key, action_value|
-        if dealer_key.include?(dealer_card)
+        if dealer_key.include?(dealer_card.to_s)
           puts action_value
         end
       end
