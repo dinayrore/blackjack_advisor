@@ -61,22 +61,173 @@ def check_deck_number
 
   deck_number = gets.chomp.to_i
 
-  unless [1, 2, 4].include?(deck_number)
+  if ![1, 2, 4].include?(deck_number)
     puts 'Invalid input. Try again.'
     check_deck_number
+
+  else
+    decks = BlackjackCards.new(deck_number)
+    deck_number = decks.value
   end
 end
 
-def compare_player_cards(players_first_card, players_second_card, sum)
+def compare_player_cards(players_first_card, players_second_card, dealer_card, deck_number, sum)
   if players_first_card == players_second_card
     puts "So you're playing with pairs, huh..."
-    search_for_pairs(sum)
+    search_for_pairs(deck_number, players_first_card, dealer_card)
   elsif players_first_card == 11 || players_second_card == 11
     puts "Alright, I can work with this! You're playing a soft hand..."
-    search_soft_hand(sum)
+    search_soft_hand(deck_number, sum, dealer_card)
   else
     puts "Tough luck there bro. You're playing a hard hand..."
-    search_hard_hand(sum)
+    search_hard_hand(deck_number, sum, dealer_card)
+  end
+end
+
+def search_for_pairs(deck_number, players_first_card, dealer_card)
+  if deck_number == 1
+    pairs_one_deck(players_first_card, dealer_card)
+  elsif deck_number == 2
+    pairs_two_decks(players_first_card, dealer_card)
+  else
+    pairs_four_decks(players_first_card, dealer_card)
+  end
+end
+
+def pairs_one_deck(players_first_card, dealer_card)
+  play = OneDeck.new
+  play.pairs.each do |player_key, value|
+    if player_key.include?(players_first_card)
+      value.each do |dealer_key, action_value|
+        if dealer_key.include?(dealer_card)
+          return action_value
+        end
+      end
+    end
+  end
+end
+
+def pairs_two_decks(players_first_card, dealer_card)
+  play = TwoDecks.new
+  play.pairs.each do |player_key, value|
+    if player_key.include?(players_first_card)
+      value.each do |dealer_key, action_value|
+        if dealer_key.include?(dealer_card)
+          return action_value
+        end
+      end
+    end
+  end
+end
+
+def pairs_four_decks(players_first_card, dealer_card)
+  play = FourDecks.new
+  play.pairs.each do |player_key, value|
+    if player_key.include?(players_first_card)
+      value.each do |dealer_key, action_value|
+        if dealer_key.include?(dealer_card)
+          return action_value
+        end
+      end
+    end
+  end
+end
+
+def search_soft_hand(deck_number, sum, dealer_card)
+  if deck_number == 1
+    soft_hand_one_deck(sum, dealer_card)
+  elsif deck_number == 2
+    soft_hand_two_decks(sum, dealer_card)
+  else
+    soft_hand_four_decks(sum, dealer_card)
+  end
+end
+
+def soft_hand_one_deck(sum, dealer_card)
+  play = OneDeck.new
+  play.soft_hand.each do |player_key, value|
+    if player_key.include?(sum)
+      value.each do |dealer_key, action_value|
+        if dealer_key.include?(dealer_card)
+          return action_value
+        end
+      end
+    end
+  end
+end
+
+def soft_hand_two_decks(sum, dealer_card)
+  play = TwoDecks.new
+  play.soft_hand.each do |player_key, value|
+    if player_key.include?(sum)
+      value.each do |dealer_key, action_value|
+        if dealer_key.include?(dealer_card)
+          return action_value
+        end
+      end
+    end
+  end
+end
+
+def soft_hand_four_decks(sum, dealer_card)
+  play = FourDecks.new
+  play.soft_hand.each do |player_key, value|
+    if player_key.include?(sum)
+      value.each do |dealer_key, action_value|
+        if dealer_key.include?(@dealer_card)
+          return action_value
+        end
+      end
+    end
+  end
+end
+
+def search_hard_hand(deck_number, sum, dealer_card)
+  if deck_number == 1
+    hard_hand_one_deck(sum, dealer_card)
+  elsif deck_number == 2
+    hard_hand_two_decks(sum, dealer_card)
+  else
+    hard_hand_four_decks(sum, dealer_card)
+  end
+end
+
+def hard_hand_one_deck(sum, dealer_card)
+  play = OneDeck.new
+  play.hard_hand_one.each do |player_key, value|
+    if player_key.include?(sum)
+      value.each do |dealer_key, action_value|
+        if dealer_key.include?(dealer_card)
+          puts action_value
+        end
+      end
+    end
+  end
+end
+
+def hard_hand_two_decks(sum, dealer_card)
+  play = TwoDecks.new
+  play.hard_hand.each do |player_key, value|
+    if player_key.include?(sum)
+      value.each do |dealer_key, action_value|
+        if dealer_key.include?(dealer_card)
+          return action_value
+        end
+      end
+    end
+  end
+end
+
+def hard_hand_four_decks(sum, dealer_card)
+  play = FourDecks.new
+  play.hard_hand.each do |player_key, value|
+    if player_key.include?(sum)
+      value.each do |dealer_key, value|
+        if dealer_key.include?(dealer_card)
+          return action_value
+        end
+      end
+    end
   end
 end
 
@@ -85,10 +236,9 @@ def main
   players_first_card = obtain_players_first_card
   players_second_card = obtain_players_second_card
   dealer_card = obtain_dealer_card
-  check_deck_number
+  deck_number = check_deck_number
   sum = players_first_card + players_second_card
-  compare_player_cards(players_first_card, players_second_card, sum)
-
+  compare_player_cards(players_first_card, players_second_card, dealer_card, deck_number, sum)
 end
 
 main if __FILE__ == $PROGRAM_NAME

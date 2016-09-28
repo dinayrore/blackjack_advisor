@@ -1,6 +1,6 @@
 # this class was created for Blackjack gameplay using two decks.
 class TwoDecks
-  def play_hard_hand_two
+  def hard_hand
     { [*5..8] => { [*2..11] => 'Hit!' },
       9 => { [*2..6] => 'Double or Hit!', [*7..11] => 'Hit!' },
       10 => { [*2..9] => 'Double or Hit!', %w(10 11) => 'Hit!' },
@@ -10,7 +10,7 @@ class TwoDecks
       [*17..21] => { [*2..11] => 'Stand.' } }
   end
 
-  def play_soft_hand_two
+  def soft_hand
     { %w(13 14) => { [*2..4, *7..11] => 'Hit!', %w(5 6) => 'Double or Hit!' },
       %w(15 16) => { [2, 3, *7..11] => 'Hit!', [*4..6] => 'Double or Hit!' },
       17 => { [2, *7..11] => 'Hit!', [*3..6] => 'Double or Hit!' },
@@ -18,7 +18,7 @@ class TwoDecks
       [*19..21] => { [*2..11] => 'Stand.' } }
   end
 
-  def play_pairs_two
+  def pairs
     { %w(2 3) => { [*2..7] => 'Split!', [*8..11] => 'Hit!' },
       4 => { [*2..4, *7..11] => 'Hit!', %w(5 6) => 'Split!' },
       5 => { [*2..9] => 'Double or Hit!', %w(10 11) => 'Hit!' },

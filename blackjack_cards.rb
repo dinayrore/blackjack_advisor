@@ -26,15 +26,4 @@ class BlackjackCards
       puts "The dealer card has a value of #{dealer_card}." "\n "
     end
   end
-
-  def open_deck(deck_number)
-    if deck_number == 1
-      OneDeck.new
-    elsif deck_number == 2
-      TwoDecks.new
-    else
-      FourDecks.new
-    end
-
-  end
 end
