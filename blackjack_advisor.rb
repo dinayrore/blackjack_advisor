@@ -1,4 +1,3 @@
-require 'pry'
 require_relative 'one_deck'
 require_relative 'two_decks'
 require_relative 'four_decks'
