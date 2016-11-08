@@ -36,7 +36,7 @@ Once you have completed the above installation processes your system is ready to
 Please complete the following procedure to run the program on a live system:
   1. Open Terminal.
   2. Change your directory to the one that which you would like to save this project. `$ cd folder_name`
-  3. Then run the command `$ git clone https://github.com/kteich88/blackjack_advisor.git` and `$ cd blackjack_advisor`
+  3. Then run the commands `$ git clone https://github.com/kteich88/blackjack_advisor.git` and `$ cd blackjack_advisor`
   4. Type `ruby blackjack_advisor.rb` to run the program.
   5. READ all instructions BEFORE adding input.
 
